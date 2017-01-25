@@ -1,0 +1,45 @@
+{
+  "name": "@process-engine-js/http",
+  "publishConfig": {
+    "registry": "https://www.npmjs.com"
+  },
+  "version": "1.0.0",
+  "description": "Tools for the HTTP protocol",
+  "main": "dist/commonjs/index.js",
+  "typings": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/5minds/JS.Foundation.git"
+  },
+  "keywords": [
+    "http",
+    "extension"
+  ],
+  "author": "5Minds IT-Solutions GmbH & Co. KG <info@5minds.de>",
+  "maintainers": [
+    "Martin Möllenbeck <martin.moellenbeck@5minds.de"
+  ],
+  "contributors": [
+    "Sebastian Meier <sebastian.meier@5minds.de>"
+  ],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/5minds/JS.Foundation/issues"
+  },
+  "homepage": "https://github.com/5minds/JS.Foundation#readme",
+  "dependencies": {
+    "@5minds/addict-ioc": "^1.1.2",
+    "@process-engine-js/utils": "^1.0.0",
+    "bluebird": "^3.4.6",
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "loggerhythm": "^1.0.0",
+    "morgan": "^1.7.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.4.0",
+    "eslint-config-5minds": "0.0.3",
+    "eslint-plugin-import": "^1.14.0",
+    "gulp": "^3.9.1"
+  }
+}
