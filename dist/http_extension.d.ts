@@ -1,4 +1,4 @@
-import { DependencyInjectionContainer } from '@5minds/addict-ioc';
+import { DependencyInjectionContainer } from 'addict-ioc';
 import * as Express from 'express';
 import { Server } from 'http';
 export declare class HttpExtension {

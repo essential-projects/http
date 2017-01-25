@@ -3,18 +3,10 @@
   "publishConfig": {
     "registry": "https://www.npmjs.com"
   },
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Tools for the HTTP protocol",
   "main": "dist/commonjs/index.js",
   "typings": "dist/index.d.ts",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/5minds/JS.Foundation.git"
-  },
-  "keywords": [
-    "http",
-    "extension"
-  ],
   "author": "5Minds IT-Solutions GmbH & Co. KG <info@5minds.de>",
   "maintainers": [
     "Martin Möllenbeck <martin.moellenbeck@5minds.de"
@@ -28,8 +20,8 @@
   },
   "homepage": "https://github.com/5minds/JS.Foundation#readme",
   "dependencies": {
-    "@5minds/addict-ioc": "^1.1.2",
     "@process-engine-js/utils": "^1.0.0",
+    "addict-ioc": "^1.0.0",
     "bluebird": "^3.4.6",
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
