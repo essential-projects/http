@@ -3,6 +3,7 @@ var Express = require("express");
 var BluebirdPromise = require("bluebird");
 var utils_1 = require("@process-engine-js/utils");
 var BodyParser = require("body-parser");
+var core_contracts_1 = require("@process-engine-js/core_contracts");
 var HttpExtension = (function () {
     function HttpExtension(container) {
         this._container = undefined;
@@ -60,8 +61,7 @@ var HttpExtension = (function () {
     HttpExtension.prototype.initializeRouters = function () {
         var _this = this;
         var routerNames;
-        var routerDiscoveryTag = this.config.routerDiscoveryTag;
-        var allRouterNames = this.container.getKeysByTags(routerDiscoveryTag);
+        var allRouterNames = this.container.getKeysByTags(core_contracts_1.RouterDiscoveryTag);
         this.container.validateDependencies();
         return utils_1.executeAsExtensionHookAsync(this.filterRouters, this, allRouterNames)
             .then(function (filteredRouterNames) {

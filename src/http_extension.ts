@@ -5,6 +5,7 @@ import {Server} from 'http';
 import {executeAsExtensionHookAsync as extensionHook} from '@process-engine-js/utils';
 import * as BodyParser from 'body-parser';
 import * as ExpressLogger from 'morgan';
+import {RouterDiscoveryTag} from '@process-engine-js/core_contracts';
 
 export class HttpExtension {
 
@@ -62,10 +63,8 @@ export class HttpExtension {
   protected initializeRouters(): Promise<void> {
 
     let routerNames;
-
-    const routerDiscoveryTag = this.config.routerDiscoveryTag;
     
-    const allRouterNames = this.container.getKeysByTags(routerDiscoveryTag);
+    const allRouterNames = this.container.getKeysByTags(RouterDiscoveryTag);
 
     this.container.validateDependencies();
 
