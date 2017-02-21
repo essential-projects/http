@@ -27,7 +27,6 @@ export class BaseRouter {
   }
 
   public initialize(): Promise<any> | any {
-    console.log('init called');
     return extensionHook(this.initializeRouter, this);
   }
 

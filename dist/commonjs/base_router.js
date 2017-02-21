@@ -28,7 +28,6 @@ var BaseRouter = (function () {
         configurable: true
     });
     BaseRouter.prototype.initialize = function () {
-        console.log('init called');
         return utils_1.executeAsExtensionHookAsync(this.initializeRouter, this);
     };
     BaseRouter.prototype.initializeRouter = function () { };
