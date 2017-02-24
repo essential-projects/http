@@ -21,13 +21,15 @@
   "homepage": "https://github.com/5minds/JS.Foundation#readme",
   "dependencies": {
     "@process-engine-js/core_contracts": "^1.0.8",
+    "@process-engine-js/http_contracts": "^1.0.0",
     "@process-engine-js/utils": "^1.0.0",
     "addict-ioc": "^1.0.0",
     "bluebird": "^3.4.6",
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "loggerhythm": "^1.0.0",
-    "morgan": "^1.7.0"
+    "morgan": "^1.7.0",
+    "popsicle": "^9.1.0"
   },
   "devDependencies": {
     "eslint": "^3.4.0",

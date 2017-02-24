@@ -3,7 +3,6 @@
 const gulptraum = require('gulptraum');
 
 const buildSystemConfig = {
-  packageName: 'http'
 };
 
 const buildSystem = new gulptraum.BuildSystem(buildSystemConfig);
