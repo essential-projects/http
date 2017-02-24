@@ -3,22 +3,16 @@
   "publishConfig": {
     "registry": "https://www.npmjs.com"
   },
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Tools for the HTTP protocol",
   "main": "dist/commonjs/index.js",
   "typings": "dist/index.d.ts",
-  "author": "5Minds IT-Solutions GmbH & Co. KG <info@5minds.de>",
-  "maintainers": [
-    "Martin Möllenbeck <martin.moellenbeck@5minds.de"
-  ],
   "contributors": [
-    "Sebastian Meier <sebastian.meier@5minds.de>"
+    "Sebastian Meier <sebastian.meier@5minds.de>",
+    "Patrick Pötschke <patrick.poetschke@quantusflow.com>",
+    "Simon Reymann <simon.reymann@quantusflow.com>"
   ],
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/5minds/JS.Foundation/issues"
-  },
-  "homepage": "https://github.com/5minds/JS.Foundation#readme",
+  "license": "MIT",
   "dependencies": {
     "@process-engine-js/core_contracts": "^1.0.8",
     "@process-engine-js/http_contracts": "^1.0.0",

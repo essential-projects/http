@@ -7,21 +7,28 @@ class BaseRouter {
         this._router = undefined;
         this.config = undefined;
     }
-    get router() {
-        if (!this._router) {
-            this._router = Express.Router();
-        }
-        return this._router;
-    }
-    get baseRoute() {
-        const baseRoute = this.config.baseRoute;
-        if (!baseRoute) {
-            return '';
-        }
-        return baseRoute;
-    }
-    initialize() {
-        console.log('init called');
+    Object.defineProperty(BaseRouter.prototype, "router", {
+        get: function () {
+            if (!this._router) {
+                this._router = Express.Router();
+            }
+            return this._router;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(BaseRouter.prototype, "baseRoute", {
+        get: function () {
+            var baseRoute = this.config.baseRoute;
+            if (!baseRoute) {
+                return '';
+            }
+            return baseRoute;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    BaseRouter.prototype.initialize = function () {
         return utils_1.executeAsExtensionHookAsync(this.initializeRouter, this);
     }
     initializeRouter() { }
