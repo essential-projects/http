@@ -34,7 +34,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
 var popsicle = require("popsicle");
 var HttpClient = (function () {
     function HttpClient() {
@@ -118,7 +117,7 @@ var HttpClient = (function () {
     };
     HttpClient.prototype.delete = function (url) {
         return __awaiter(this, void 0, void 0, function () {
-            var requestOptions, result;
+            var requestOptions, result, response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -126,10 +125,14 @@ var HttpClient = (function () {
                         return [4 /*yield*/, popsicle.request(requestOptions)];
                     case 1:
                         result = _a.sent();
-                        if (result.status !== 200) {
+                        if (result.status !== 204 && result.status !== 200) {
                             throw new Error(result.body);
                         }
-                        return [2 /*return*/];
+                        response = {
+                            result: result.body,
+                            status: result.status
+                        };
+                        return [2 /*return*/, response];
                 }
             });
         });

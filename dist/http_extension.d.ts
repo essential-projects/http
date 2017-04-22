@@ -1,3 +1,4 @@
+/// <reference types="node" />
 import { DependencyInjectionContainer } from 'addict-ioc';
 import * as Express from 'express';
 import { Server } from 'http';

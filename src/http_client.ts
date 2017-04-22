@@ -73,15 +73,22 @@ export class HttpClient implements IHttpClient {
     return response;
   }
 
-  public async delete<T>(url: string): Promise<void> {
+  public async delete<T>(url: string): Promise<IResponse<T>> {
 
     const requestOptions = this._buildRequestOptions('DELETE', url);
 
     const result = await popsicle.request(requestOptions);
 
-    if (result.status !== 200) {
+    if (result.status !== 204 && result.status !== 200) {
       throw new Error(result.body);
     }
+
+    const response = {
+      result: result.body,
+      status: result.status
+    };
+
+    return response;
   }
 
 }
