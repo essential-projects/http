@@ -1,26 +1,32 @@
-import {IHttpClient, IResponse} from '@process-engine-js/http_contracts';
+import {IHttpClient, IResponse, IRequestOptions} from '@process-engine-js/http_contracts';
 import * as popsicle from 'popsicle';
 
 export class HttpClient implements IHttpClient {
 
   public config: any = undefined;
 
-  private _buildRequestOptions(method: string, url: string): popsicle.RequestOptions {
+  protected buildRequestOptions(method: string, url: string, options?: IRequestOptions): IRequestOptions {
 
     const baseUrl = this.config.url ? `${this.config.url}/` : '';
 
-    return {
+    const requestOptions = {
       method: method,
       url: `${baseUrl}${url}`,
       headers: {
         'Content-Type': 'application/json'
       }
     };
+
+    if (options) {
+      Object.assign(requestOptions, options);
+    }
+
+    return requestOptions;
   }
 
-  public async get<T>(url: string): Promise<IResponse<T>> {
+  public async get<T>(url: string, options?: IRequestOptions): Promise<IResponse<T>> {
 
-    const requestOptions = this._buildRequestOptions('GET', url);
+    const requestOptions = this.buildRequestOptions('GET', url, options);
 
     const result = await popsicle.request(requestOptions);
 
@@ -36,9 +42,9 @@ export class HttpClient implements IHttpClient {
     return response;
   }
 
-  public async post<T>(url: string, data: T): Promise<IResponse<T>> {
+  public async post<T>(url: string, data: T, options?: IRequestOptions): Promise<IResponse<T>> {
 
-    const requestOptions = this._buildRequestOptions('POST', url);
+    const requestOptions = this.buildRequestOptions('POST', url, options);
 
     const result = await popsicle.request(requestOptions);
 
@@ -55,9 +61,9 @@ export class HttpClient implements IHttpClient {
 
   }
 
-  public async put<T>(url: string, data: T): Promise<IResponse<T>> {
+  public async put<T>(url: string, data: T, options?: IRequestOptions): Promise<IResponse<T>> {
 
-    const requestOptions = this._buildRequestOptions('PUT', url);
+    const requestOptions = this.buildRequestOptions('PUT', url, options);
 
     const result = await popsicle.request(requestOptions);
 
@@ -73,9 +79,9 @@ export class HttpClient implements IHttpClient {
     return response;
   }
 
-  public async delete<T>(url: string): Promise<IResponse<T>> {
+  public async delete<T>(url: string, options?: IRequestOptions): Promise<IResponse<T>> {
 
-    const requestOptions = this._buildRequestOptions('DELETE', url);
+    const requestOptions = this.buildRequestOptions('DELETE', url, options);
 
     const result = await popsicle.request(requestOptions);
 

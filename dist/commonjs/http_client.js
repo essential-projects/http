@@ -34,29 +34,32 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
 var popsicle = require("popsicle");
 var HttpClient = (function () {
     function HttpClient() {
         this.config = undefined;
     }
-    HttpClient.prototype._buildRequestOptions = function (method, url) {
+    HttpClient.prototype.buildRequestOptions = function (method, url, options) {
         var baseUrl = this.config.url ? this.config.url + "/" : '';
-        return {
+        var requestOptions = {
             method: method,
             url: "" + baseUrl + url,
             headers: {
                 'Content-Type': 'application/json'
             }
         };
+        if (options) {
+            Object.assign(requestOptions, options);
+        }
+        return requestOptions;
     };
-    HttpClient.prototype.get = function (url) {
+    HttpClient.prototype.get = function (url, options) {
         return __awaiter(this, void 0, void 0, function () {
             var requestOptions, result, response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        requestOptions = this._buildRequestOptions('GET', url);
+                        requestOptions = this.buildRequestOptions('GET', url, options);
                         return [4 /*yield*/, popsicle.request(requestOptions)];
                     case 1:
                         result = _a.sent();
@@ -72,13 +75,13 @@ var HttpClient = (function () {
             });
         });
     };
-    HttpClient.prototype.post = function (url, data) {
+    HttpClient.prototype.post = function (url, data, options) {
         return __awaiter(this, void 0, void 0, function () {
             var requestOptions, result, response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        requestOptions = this._buildRequestOptions('POST', url);
+                        requestOptions = this.buildRequestOptions('POST', url, options);
                         return [4 /*yield*/, popsicle.request(requestOptions)];
                     case 1:
                         result = _a.sent();
@@ -94,13 +97,13 @@ var HttpClient = (function () {
             });
         });
     };
-    HttpClient.prototype.put = function (url, data) {
+    HttpClient.prototype.put = function (url, data, options) {
         return __awaiter(this, void 0, void 0, function () {
             var requestOptions, result, response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        requestOptions = this._buildRequestOptions('PUT', url);
+                        requestOptions = this.buildRequestOptions('PUT', url, options);
                         return [4 /*yield*/, popsicle.request(requestOptions)];
                     case 1:
                         result = _a.sent();
@@ -116,13 +119,13 @@ var HttpClient = (function () {
             });
         });
     };
-    HttpClient.prototype.delete = function (url) {
+    HttpClient.prototype.delete = function (url, options) {
         return __awaiter(this, void 0, void 0, function () {
             var requestOptions, result, response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        requestOptions = this._buildRequestOptions('DELETE', url);
+                        requestOptions = this.buildRequestOptions('DELETE', url, options);
                         return [4 /*yield*/, popsicle.request(requestOptions)];
                     case 1:
                         result = _a.sent();

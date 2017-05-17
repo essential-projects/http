@@ -1,9 +1,9 @@
-import { IHttpClient, IResponse } from '@process-engine-js/http_contracts';
+import { IHttpClient, IResponse, IRequestOptions } from '@process-engine-js/http_contracts';
 export declare class HttpClient implements IHttpClient {
     config: any;
-    private _buildRequestOptions(method, url);
-    get<T>(url: string): Promise<IResponse<T>>;
-    post<T>(url: string, data: T): Promise<IResponse<T>>;
-    put<T>(url: string, data: T): Promise<IResponse<T>>;
-    delete<T>(url: string): Promise<IResponse<T>>;
+    protected buildRequestOptions(method: string, url: string, options?: IRequestOptions): IRequestOptions;
+    get<T>(url: string, options?: IRequestOptions): Promise<IResponse<T>>;
+    post<T>(url: string, data: T, options?: IRequestOptions): Promise<IResponse<T>>;
+    put<T>(url: string, data: T, options?: IRequestOptions): Promise<IResponse<T>>;
+    delete<T>(url: string, options?: IRequestOptions): Promise<IResponse<T>>;
 }
