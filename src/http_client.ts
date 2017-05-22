@@ -9,7 +9,7 @@ export class HttpClient implements IHttpClient {
 
     const baseUrl = this.config.url ? `${this.config.url}/` : '';
 
-    const requestOptions = {
+    const requestOptions: any = {
       method: method,
       url: `${baseUrl}${url}`,
       headers: {
@@ -29,9 +29,9 @@ export class HttpClient implements IHttpClient {
   private _deleteEmptyOptions(options: any) {
 
     const propertyKeys = Object.keys(options);
-    
+
     propertyKeys.forEach((attributeKey) => {
-      
+
       const value = options[attributeKey];
       if (value === undefined || value === null) {
         delete options[attributeKey];
@@ -62,7 +62,7 @@ export class HttpClient implements IHttpClient {
 
   public async post<T>(url: string, data: T, options?: IRequestOptions): Promise<IResponse<T>> {
 
-    const requestOptions = this.buildRequestOptions('POST', url, options);
+    const requestOptions: any = this.buildRequestOptions('POST', url, options);
 
     requestOptions.body = data;
 
@@ -83,8 +83,8 @@ export class HttpClient implements IHttpClient {
 
   public async put<T>(url: string, data: T, options?: IRequestOptions): Promise<IResponse<T>> {
 
-    const requestOptions = this.buildRequestOptions('PUT', url, options);
-    
+    const requestOptions: any = this.buildRequestOptions('PUT', url, options);
+
     requestOptions.body = data;
 
     const result = await popsicle.request(requestOptions);
@@ -118,5 +118,4 @@ export class HttpClient implements IHttpClient {
 
     return response;
   }
-
 }
