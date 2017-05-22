@@ -21,7 +21,25 @@ export class HttpClient implements IHttpClient {
       Object.assign(requestOptions, options);
     }
 
+    this._deleteEmptyOptions(requestOptions.query);
+
     return requestOptions;
+  }
+
+  private _deleteEmptyOptions(options: any) {
+
+    const propertyKeys = Object.keys(options);
+    
+    propertyKeys.forEach((attributeKey) => {
+      
+      const value = options[attributeKey];
+      if (value === undefined || value === null) {
+        delete options[attributeKey];
+      }
+      if (Array.isArray(value) && value.length === 0) {
+        delete options[attributeKey];
+      }
+    });
   }
 
   public async get<T>(url: string, options?: IRequestOptions): Promise<IResponse<T>> {
@@ -46,6 +64,8 @@ export class HttpClient implements IHttpClient {
 
     const requestOptions = this.buildRequestOptions('POST', url, options);
 
+    requestOptions.body = data;
+
     const result = await popsicle.request(requestOptions);
 
     if (result.status < 200 || result.status >= 300) {
@@ -64,6 +84,8 @@ export class HttpClient implements IHttpClient {
   public async put<T>(url: string, data: T, options?: IRequestOptions): Promise<IResponse<T>> {
 
     const requestOptions = this.buildRequestOptions('PUT', url, options);
+    
+    requestOptions.body = data;
 
     const result = await popsicle.request(requestOptions);
 

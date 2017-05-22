@@ -51,7 +51,20 @@ var HttpClient = (function () {
         if (options) {
             Object.assign(requestOptions, options);
         }
+        this._deleteEmptyOptions(requestOptions.query);
         return requestOptions;
+    };
+    HttpClient.prototype._deleteEmptyOptions = function (options) {
+        var propertyKeys = Object.keys(options);
+        propertyKeys.forEach(function (attributeKey) {
+            var value = options[attributeKey];
+            if (value === undefined || value === null) {
+                delete options[attributeKey];
+            }
+            if (Array.isArray(value) && value.length === 0) {
+                delete options[attributeKey];
+            }
+        });
     };
     HttpClient.prototype.get = function (url, options) {
         return __awaiter(this, void 0, void 0, function () {
@@ -82,6 +95,7 @@ var HttpClient = (function () {
                 switch (_a.label) {
                     case 0:
                         requestOptions = this.buildRequestOptions('POST', url, options);
+                        requestOptions.body = data;
                         return [4 /*yield*/, popsicle.request(requestOptions)];
                     case 1:
                         result = _a.sent();
@@ -104,6 +118,7 @@ var HttpClient = (function () {
                 switch (_a.label) {
                     case 0:
                         requestOptions = this.buildRequestOptions('PUT', url, options);
+                        requestOptions.body = data;
                         return [4 /*yield*/, popsicle.request(requestOptions)];
                     case 1:
                         result = _a.sent();

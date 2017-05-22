@@ -1,6 +1,6 @@
 'use strict';
 
-const AdapterPostgres = require('./dist/commonjs/index').AdapterPostgres;
+const HttpClient = require('./dist/commonjs/index').HttpClient;
 
 function registerInContainer(container) {
 
