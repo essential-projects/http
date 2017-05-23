@@ -8,8 +8,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t;
-    return { next: verb(0), "throw": verb(1), "return": verb(2) };
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
@@ -74,7 +74,7 @@ var HttpClient = (function () {
                 switch (_a.label) {
                     case 0:
                         requestOptions = this.buildRequestOptions('GET', url, options);
-                        return [4 /*yield*/, popsicle.request(requestOptions)];
+                        return [4, popsicle.request(requestOptions)];
                     case 1:
                         result = _a.sent();
                         if (result.status < 200 || result.status >= 300) {
@@ -84,7 +84,7 @@ var HttpClient = (function () {
                             result: result.body,
                             status: result.status
                         };
-                        return [2 /*return*/, response];
+                        return [2, response];
                 }
             });
         });
@@ -97,7 +97,7 @@ var HttpClient = (function () {
                     case 0:
                         requestOptions = this.buildRequestOptions('POST', url, options);
                         requestOptions.body = data;
-                        return [4 /*yield*/, popsicle.request(requestOptions)];
+                        return [4, popsicle.request(requestOptions)];
                     case 1:
                         result = _a.sent();
                         if (result.status < 200 || result.status >= 300) {
@@ -107,7 +107,7 @@ var HttpClient = (function () {
                             result: result.body,
                             status: result.status
                         };
-                        return [2 /*return*/, response];
+                        return [2, response];
                 }
             });
         });
@@ -120,7 +120,7 @@ var HttpClient = (function () {
                     case 0:
                         requestOptions = this.buildRequestOptions('PUT', url, options);
                         requestOptions.body = data;
-                        return [4 /*yield*/, popsicle.request(requestOptions)];
+                        return [4, popsicle.request(requestOptions)];
                     case 1:
                         result = _a.sent();
                         if (result.status < 200 || result.status >= 300) {
@@ -130,7 +130,7 @@ var HttpClient = (function () {
                             result: result.body,
                             status: result.status
                         };
-                        return [2 /*return*/, response];
+                        return [2, response];
                 }
             });
         });
@@ -142,7 +142,7 @@ var HttpClient = (function () {
                 switch (_a.label) {
                     case 0:
                         requestOptions = this.buildRequestOptions('DELETE', url, options);
-                        return [4 /*yield*/, popsicle.request(requestOptions)];
+                        return [4, popsicle.request(requestOptions)];
                     case 1:
                         result = _a.sent();
                         if (result.status !== 204 && result.status !== 200) {
@@ -152,7 +152,7 @@ var HttpClient = (function () {
                             result: result.body,
                             status: result.status
                         };
-                        return [2 /*return*/, response];
+                        return [2, response];
                 }
             });
         });
