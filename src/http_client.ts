@@ -59,8 +59,7 @@ export class HttpClient implements IHttpClient {
 
     return response;
   }
-
-  public async post<T>(url: string, data: T, options?: IRequestOptions): Promise<IResponse<T>> {
+  public async post<D, T>(url: string, data: D, options?: IRequestOptions): Promise<IResponse<T>> {
 
     const requestOptions: any = this.buildRequestOptions('POST', url, options);
 
