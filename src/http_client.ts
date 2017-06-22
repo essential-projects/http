@@ -71,7 +71,7 @@ export class HttpClient implements IHttpClient {
       throw new Error(result.body);
     }
 
-    const response = {
+    const response: IResponse<T> = {
       result: result.body,
       status: result.status
     };
