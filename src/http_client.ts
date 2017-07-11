@@ -7,7 +7,7 @@ export class HttpClient implements IHttpClient {
 
   protected buildRequestOptions(method: string, url: string, options?: IRequestOptions): IRequestOptions {
 
-    const baseUrl = this.config.url ? `${this.config.url}/` : '';
+    const baseUrl = this.config && this.config.url ? `${this.config.url}/` : '';
 
     const requestOptions: any = {
       method: method,
@@ -21,7 +21,9 @@ export class HttpClient implements IHttpClient {
       Object.assign(requestOptions, options);
     }
 
-    this._deleteEmptyOptions(requestOptions.query);
+    if (requestOptions.query) {
+      this._deleteEmptyOptions(requestOptions.query);
+    }
 
     return requestOptions;
   }

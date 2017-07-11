@@ -41,7 +41,7 @@ var HttpClient = (function () {
         this.config = undefined;
     }
     HttpClient.prototype.buildRequestOptions = function (method, url, options) {
-        var baseUrl = this.config.url ? this.config.url + "/" : '';
+        var baseUrl = this.config && this.config.url ? this.config.url + "/" : '';
         var requestOptions = {
             method: method,
             url: "" + baseUrl + url,
@@ -52,7 +52,9 @@ var HttpClient = (function () {
         if (options) {
             Object.assign(requestOptions, options);
         }
-        this._deleteEmptyOptions(requestOptions.query);
+        if (requestOptions.query) {
+            this._deleteEmptyOptions(requestOptions.query);
+        }
         return requestOptions;
     };
     HttpClient.prototype._deleteEmptyOptions = function (options) {
