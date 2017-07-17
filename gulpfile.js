@@ -10,7 +10,7 @@ const buildSystem = new gulptraum.BuildSystem(buildSystemConfig);
 buildSystem.config = buildSystemConfig;
 
 const typeScriptConfig = {
-  compileToModules: ['commonjs'],
+  compileToModules: ['commonjs', 'amd'],
 };
 
 const gulp = require('gulp');
