@@ -20,7 +20,7 @@
     "popsicle": "^9.1.0"
   },
   "devDependencies": {
-    "@process-engine-js/gulptraum": "^1.2.5",
+    "gulptraum": "^2.2.1",
     "eslint": "^4.6.1",
     "eslint-config-5minds": "0.1.0",
     "eslint-plugin-import": "^1.14.0",
