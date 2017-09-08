@@ -1,4 +1,4 @@
-import {IHttpClient, IResponse, IRequestOptions} from '@process-engine-js/http_contracts';
+import {IHttpClient, IRequestOptions, IResponse} from '@process-engine-js/http_contracts';
 import * as popsicle from 'popsicle';
 
 export class HttpClient implements IHttpClient {
@@ -13,8 +13,8 @@ export class HttpClient implements IHttpClient {
       method: method,
       url: `${baseUrl}${url}`,
       headers: {
-        'Content-Type': 'application/json'
-      }
+        'Content-Type': 'application/json',
+      },
     };
 
     if (options) {
@@ -56,7 +56,7 @@ export class HttpClient implements IHttpClient {
 
     const response = {
       result: result.body,
-      status: result.status
+      status: result.status,
     };
 
     return response;
@@ -75,7 +75,7 @@ export class HttpClient implements IHttpClient {
 
     const response: IResponse<T> = {
       result: result.body,
-      status: result.status
+      status: result.status,
     };
 
     return response;
@@ -96,7 +96,7 @@ export class HttpClient implements IHttpClient {
 
     const response = {
       result: result.body,
-      status: result.status
+      status: result.status,
     };
 
     return response;
@@ -114,7 +114,7 @@ export class HttpClient implements IHttpClient {
 
     const response = {
       result: result.body,
-      status: result.status
+      status: result.status,
     };
 
     return response;
