@@ -21,8 +21,8 @@
   },
   "devDependencies": {
     "@process-engine-js/gulptraum": "^1.2.5",
-    "eslint": "^3.4.0",
-    "eslint-config-5minds": "0.0.3",
+    "eslint": "^4.6.1",
+    "eslint-config-5minds": "0.1.0",
     "eslint-plugin-import": "^1.14.0",
     "gulp": "^3.9.1"
   }
