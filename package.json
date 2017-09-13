@@ -3,7 +3,7 @@
   "publishConfig": {
     "registry": "https://www.npmjs.com"
   },
-  "version": "1.0.14",
+  "version": "2.0.0",
   "description": "Tools for the HTTP protocol",
   "main": "dist/commonjs/index.js",
   "typings": "dist/index.d.ts",
@@ -14,16 +14,24 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@process-engine-js/http_contracts": "^1.0.1",
-    "@process-engine-js/utils": "^1.0.2",
+    "@process-engine-js/http_contracts": "^2.0.0",
     "bluebird": "^3.4.6",
     "popsicle": "^9.1.0"
   },
   "devDependencies": {
-    "@process-engine-js/gulptraum": "^1.2.5",
-    "eslint": "^3.4.0",
-    "eslint-config-5minds": "0.0.3",
+    "@process-engine-js/tslint-config": "^1.0.1",
+    "eslint": "^4.6.1",
+    "eslint-config-5minds": "0.1.0",
     "eslint-plugin-import": "^1.14.0",
-    "gulp": "^3.9.1"
+    "gulp": "^3.9.1",
+    "gulptraum": "^2.2.1",
+    "tslint": "^5.7.0",
+    "typescript": "^2.5.2"
+  },
+  "scripts": {
+    "build": "gulp build",
+    "prepublishOnly": "npm run build && npm run build-schemas && npm run build-doc",
+    "build-doc": "gulp doc",
+    "build-schemas": "gulp typescript-schema"
   }
 }

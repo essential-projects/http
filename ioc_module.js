@@ -4,7 +4,8 @@ const HttpClient = require('./dist/commonjs/index').HttpClient;
 
 function registerInContainer(container) {
 
-  container.register('HttpClient', HttpClient);
+  container.register('HttpClient', HttpClient)
+    .singleton();
 
 }
 
