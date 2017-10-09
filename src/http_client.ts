@@ -1,4 +1,4 @@
-import {IHttpClient, IRequestOptions, IResponse} from '@process-engine-js/http_contracts';
+import {IHttpClient, IRequestOptions, IResponse} from '@essential-projects/http_contracts';
 import * as popsicle from 'popsicle';
 
 export class HttpClient implements IHttpClient {

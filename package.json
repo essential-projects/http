@@ -1,5 +1,5 @@
 {
-  "name": "@process-engine-js/http",
+  "name": "@essential-projects/http",
   "publishConfig": {
     "registry": "https://www.npmjs.com"
   },
@@ -14,12 +14,12 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@process-engine-js/http_contracts": "^2.0.0",
+    "@essential-projects/http_contracts": "^2.0.0",
     "bluebird": "^3.4.6",
     "popsicle": "^9.1.0"
   },
   "devDependencies": {
-    "@process-engine-js/tslint-config": "^1.0.1",
+    "@essential-projects/tslint-config": "^1.0.1",
     "eslint": "^4.6.1",
     "eslint-config-5minds": "0.1.0",
     "eslint-plugin-import": "^1.14.0",
