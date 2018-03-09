@@ -3,20 +3,21 @@
   "publishConfig": {
     "registry": "https://www.npmjs.com"
   },
-  "version": "1.0.0-rc4",
+  "version": "1.0.0-rc5",
   "description": "Tools for the HTTP protocol",
   "main": "dist/commonjs/index.js",
   "typings": "dist/index.d.ts",
   "contributors": [
     "Sebastian Meier <sebastian.meier@5minds.de>",
+    "Christian Werner <christian.werner@5minds.de>",
     "Patrick Pötschke <patrick.poetschke@quantusflow.com>",
     "Simon Reymann <simon.reymann@quantusflow.com>"
   ],
   "license": "MIT",
   "dependencies": {
-    "@essential-projects/http_contracts": "^1.0.0-rc3",
+    "@essential-projects/http_contracts": "^1.0.0-rc5",
     "bluebird": "^3.4.6",
-    "popsicle": "^9.1.0"
+    "popsicle": "^9.2.0"
   },
   "devDependencies": {
     "@essential-projects/tslint-config": "^1.0.0-rc3",
