@@ -126,12 +126,12 @@ export class HttpClient implements IHttpClient {
 
   private parsePopsicleResponse(result: any): any {
     // NOTE: For whatever reason, every response.body received by popsicle is a string,
-    // even in a response header "Content-Type application/json" is set.
+    // even in a response header "Content-Type application/json" is set, or if the response body does not exist.
     // To get around this, we have to cast the result manually.
-    if (typeof result !== 'string') {
+    try {
+      return JSON.parse(result);
+    } catch (error) {
       return result;
     }
-
-    return JSON.parse(result);
   }
 }
