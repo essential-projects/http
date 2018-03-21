@@ -3,7 +3,7 @@
   "publishConfig": {
     "registry": "https://www.npmjs.com"
   },
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Tools for the HTTP protocol",
   "main": "dist/commonjs/index.js",
   "typings": "dist/index.d.ts",
@@ -15,6 +15,7 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "@essential-projects/errors_ts": "^1.1.0",
     "@essential-projects/http_contracts": "^1.0.0",
     "bluebird": "^3.4.6",
     "popsicle": "^9.2.0"

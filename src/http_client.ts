@@ -1,3 +1,4 @@
+import * as EssentialProjectErrors from '@essential-projects/errors_ts';
 import {IHttpClient, IRequestOptions, IResponse} from '@essential-projects/http_contracts';
 import * as popsicle from 'popsicle';
 
@@ -8,6 +9,55 @@ export class HttpClient implements IHttpClient {
   private httpSuccessResponseCode: number = 200;
   private httpSuccessNoContentResponseCode: number = 204;
   private httpRedirectResponseCode: number = 300;
+
+  public async get<T>(url: string, options?: IRequestOptions): Promise<IResponse<T>> {
+
+    const requestOptions: IRequestOptions = this.buildRequestOptions('GET', url, options);
+
+    const response: any = await popsicle.request(requestOptions);
+
+    const parsedResponse: IResponse<T> = this._evaluateResponse<T>(response);
+
+    return parsedResponse;
+  }
+
+  public async post<D, T>(url: string, data: D, options?: IRequestOptions): Promise<IResponse<T>> {
+
+    const requestOptions: any = this.buildRequestOptions('POST', url, options);
+
+    requestOptions.body = data;
+
+    const response: any = await popsicle.request(requestOptions);
+
+    const parsedResponse: IResponse<T> = this._evaluateResponse<T>(response);
+
+    return parsedResponse;
+
+  }
+
+  public async put<T>(url: string, data: T, options?: IRequestOptions): Promise<IResponse<T>> {
+
+    const requestOptions: any = this.buildRequestOptions('PUT', url, options);
+
+    requestOptions.body = data;
+
+    const response: any = await popsicle.request(requestOptions);
+
+    const parsedResponse: IResponse<T> = this._evaluateResponse<T>(response);
+
+    return parsedResponse;
+  }
+
+  public async delete<T>(url: string, options?: IRequestOptions): Promise<IResponse<T>> {
+
+    const requestOptions: IRequestOptions = this.buildRequestOptions('DELETE', url, options);
+
+    const response: any = await popsicle.request(requestOptions);
+
+    const parsedResponse: IResponse<T> = this._evaluateResponse<T>(response);
+
+    return parsedResponse;
+  }
 
   protected buildRequestOptions(method: string, url: string, options?: IRequestOptions): IRequestOptions {
 
@@ -48,83 +98,32 @@ export class HttpClient implements IHttpClient {
     });
   }
 
-  public async get<T>(url: string, options?: IRequestOptions): Promise<IResponse<T>> {
+  private _evaluateResponse<T>(response: any): IResponse<T> {
 
-    const requestOptions: IRequestOptions = this.buildRequestOptions('GET', url, options);
-
-    const result: any = await popsicle.request(requestOptions);
-
-    if (result.status < this.httpSuccessResponseCode || result.status >= this.httpRedirectResponseCode) {
-      throw new Error(result.body);
+    if (this._responseIsAnError(response)) {
+      this._createAndThrowEssentialProjectsError(response);
     }
 
-    const response: IResponse<T> = {
-      result: this.parsePopsicleResponse(result.body),
-      status: result.status,
+    const parsedResponse: IResponse<T> = {
+      result: this._parseResponseBody(response.body),
+      status: response.status,
     };
 
-    return response;
-  }
-  public async post<D, T>(url: string, data: D, options?: IRequestOptions): Promise<IResponse<T>> {
-
-    const requestOptions: any = this.buildRequestOptions('POST', url, options);
-
-    requestOptions.body = data;
-
-    const result: any = await popsicle.request(requestOptions);
-
-    if (result.status < this.httpSuccessResponseCode || result.status >= this.httpRedirectResponseCode) {
-      throw new Error(result.body);
-    }
-
-    const response: IResponse<T> = {
-      result: this.parsePopsicleResponse(result.body),
-      status: result.status,
-    };
-
-    return response;
-
+    return parsedResponse;
   }
 
-  public async put<T>(url: string, data: T, options?: IRequestOptions): Promise<IResponse<T>> {
-
-    const requestOptions: any = this.buildRequestOptions('PUT', url, options);
-
-    requestOptions.body = data;
-
-    const result: any = await popsicle.request(requestOptions);
-
-    if (result.status < this.httpSuccessResponseCode || result.status >= this.httpRedirectResponseCode) {
-      throw new Error(result.body);
-    }
-
-    const response: IResponse<T> = {
-      result: this.parsePopsicleResponse(result.body),
-      status: result.status,
-    };
-
-    return response;
+  private _responseIsAnError(response: any): boolean {
+    return response.status < this.httpSuccessResponseCode || response.status >= this.httpRedirectResponseCode;
   }
 
-  public async delete<T>(url: string, options?: IRequestOptions): Promise<IResponse<T>> {
+  private _createAndThrowEssentialProjectsError(response: any): void {
+    const responseStatusCode: number = response.status;
+    const essentialProjectsErrorName: string = EssentialProjectErrors.ErrorCodes[responseStatusCode];
 
-    const requestOptions: IRequestOptions = this.buildRequestOptions('DELETE', url, options);
-
-    const result: any = await popsicle.request(requestOptions);
-
-    if (result.status !== this.httpSuccessNoContentResponseCode && result.status !== this.httpSuccessResponseCode) {
-      throw new Error(result.body);
-    }
-
-    const response: IResponse<T> = {
-      result: this.parsePopsicleResponse(result.body),
-      status: result.status,
-    };
-
-    return response;
+    throw new EssentialProjectErrors[essentialProjectsErrorName](response.body);
   }
 
-  private parsePopsicleResponse(result: any): any {
+  private _parseResponseBody(result: any): any {
     // NOTE: For whatever reason, every response.body received by popsicle is a string,
     // even in a response header "Content-Type application/json" is set, or if the response body does not exist.
     // To get around this, we have to cast the result manually.
