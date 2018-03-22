@@ -32,7 +32,6 @@ export class HttpClient implements IHttpClient {
     const parsedResponse: IResponse<T> = this._evaluateResponse<T>(response);
 
     return parsedResponse;
-
   }
 
   public async put<T>(url: string, data: T, options?: IRequestOptions): Promise<IResponse<T>> {
@@ -118,9 +117,17 @@ export class HttpClient implements IHttpClient {
 
   private _createAndThrowEssentialProjectsError(response: any): void {
     const responseStatusCode: number = response.status;
-    const essentialProjectsErrorName: string = EssentialProjectErrors.ErrorCodes[responseStatusCode];
+    const errorName: string = EssentialProjectErrors.ErrorCodes[responseStatusCode];
 
-    throw new EssentialProjectErrors[essentialProjectsErrorName](response.body);
+    if (!this._isEssentialProjectsError(errorName)) {
+      throw new Error(response.body);
+    }
+
+    throw new EssentialProjectErrors[errorName](response.body);
+  }
+
+  private _isEssentialProjectsError(errorName: string): boolean {
+    return errorName in EssentialProjectErrors;
   }
 
   private _parseResponseBody(result: any): any {
