@@ -7,12 +7,11 @@ export class HttpClient implements IHttpClient {
   public config: any = undefined;
 
   private httpSuccessResponseCode: number = 200;
-  private httpSuccessNoContentResponseCode: number = 204;
   private httpRedirectResponseCode: number = 300;
 
   public async get<T>(url: string, options?: IRequestOptions): Promise<IResponse<T>> {
 
-    const requestOptions: IRequestOptions = this.buildRequestOptions('GET', url, options);
+    const requestOptions: popsicle.RequestOptions = this.buildRequestOptions('GET', url, options);
 
     const response: any = await popsicle.request(requestOptions);
 
@@ -23,7 +22,7 @@ export class HttpClient implements IHttpClient {
 
   public async post<D, T>(url: string, data: D, options?: IRequestOptions): Promise<IResponse<T>> {
 
-    const requestOptions: any = this.buildRequestOptions('POST', url, options);
+    const requestOptions: popsicle.RequestOptions = this.buildRequestOptions('POST', url, options);
 
     requestOptions.body = data;
 
@@ -36,7 +35,7 @@ export class HttpClient implements IHttpClient {
 
   public async put<T>(url: string, data: T, options?: IRequestOptions): Promise<IResponse<T>> {
 
-    const requestOptions: any = this.buildRequestOptions('PUT', url, options);
+    const requestOptions: popsicle.RequestOptions = this.buildRequestOptions('PUT', url, options);
 
     requestOptions.body = data;
 
@@ -49,7 +48,7 @@ export class HttpClient implements IHttpClient {
 
   public async delete<T>(url: string, options?: IRequestOptions): Promise<IResponse<T>> {
 
-    const requestOptions: IRequestOptions = this.buildRequestOptions('DELETE', url, options);
+    const requestOptions: popsicle.RequestOptions = this.buildRequestOptions('DELETE', url, options);
 
     const response: any = await popsicle.request(requestOptions);
 
@@ -58,11 +57,11 @@ export class HttpClient implements IHttpClient {
     return parsedResponse;
   }
 
-  protected buildRequestOptions(method: string, url: string, options?: IRequestOptions): IRequestOptions {
+  protected buildRequestOptions(method: string, url: string, options?: IRequestOptions): popsicle.RequestOptions {
 
     const baseUrl: string = this.config && this.config.url ? `${this.config.url}/` : '';
 
-    const requestOptions: any = {
+    const requestOptions: popsicle.RequestOptions = {
       method: method,
       url: `${baseUrl}${url}`,
       headers: {
