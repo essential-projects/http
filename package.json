@@ -13,8 +13,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@essential-projects/errors_ts": "~1.4.0",
-    "@essential-projects/http_contracts": "~2.3.1",
+    "@essential-projects/errors_ts": "feature~change_to_eslint_and_tsc",
+    "@essential-projects/http_contracts": "feature~change_to_eslint_and_tsc",
     "bluebird": "~3.5.2",
     "popsicle": "~9.2.0"
   },
