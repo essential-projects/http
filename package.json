@@ -22,7 +22,7 @@
   "devDependencies": {
     "@essential-projects/eslint-config": "^1.0.0",
     "@types/express": "^4.16.1",
-    "@types/node": "^10.12.2",
+    "@types/node": "^12.11.7",
     "@types/socket.io": "^2.1.0",
     "eslint": "^5.16.0",
     "tsconfig": "^7.0.0",
