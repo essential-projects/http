@@ -120,11 +120,16 @@ export class HttpClient implements IHttpClient {
     const responseStatusCode = response.status;
     const errorName = EssentialProjectErrors.ErrorCodes[responseStatusCode];
 
+    const errorInfo = this.parseResponseBody<EssentialProjectErrors.BaseError>(response.body);
+
     if (!this.isEssentialProjectsError(errorName)) {
-      throw new Error(response.body);
+      throw new Error(errorInfo.message);
     }
 
-    throw new EssentialProjectErrors[errorName](response.body);
+    const essentialProjectsError = new EssentialProjectErrors[errorName](errorInfo.message);
+    essentialProjectsError.additionalInformation = errorInfo.additionalInformation;
+
+    throw essentialProjectsError;
   }
 
   private isEssentialProjectsError(errorName: string): boolean {
@@ -132,7 +137,7 @@ export class HttpClient implements IHttpClient {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private parseResponseBody(result: any): any {
+  private parseResponseBody<TTarget>(result: any): TTarget {
     // NOTE: For whatever reason, every response.body received by popsicle is a string,
     // even in a response header "Content-Type application/json" is set, or if the response body does not exist.
     // To get around this, we have to cast the result manually.
