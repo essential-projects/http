@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import * as EssentialProjectErrors from '@essential-projects/errors_ts';
 import {IHttpClient, IRequestOptions, IResponse} from '@essential-projects/http_contracts';
 import * as popsicle from 'popsicle';
