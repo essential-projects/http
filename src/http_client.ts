@@ -3,10 +3,14 @@ import * as EssentialProjectErrors from '@essential-projects/errors_ts';
 import {IHttpClient, IRequestOptions, IResponse} from '@essential-projects/http_contracts';
 import * as popsicle from 'popsicle';
 
+interface IErrorInfo {
+  message: string;
+  additionalInformation?: object;
+}
+
 export class HttpClient implements IHttpClient {
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public config: any = undefined;
+  public config: {[propertyName: string]: string};
 
   private httpSuccessResponseCode = 200;
   private httpRedirectResponseCode = 300;
@@ -61,7 +65,7 @@ export class HttpClient implements IHttpClient {
 
   protected buildRequestOptions(method: string, url: string, options?: IRequestOptions): popsicle.RequestOptions {
 
-    const baseUrl = this.config && this.config.url ? `${this.config.url}/` : '';
+    const baseUrl = this.config?.url ? `${this.config.url}/` : '';
 
     const requestOptions: popsicle.RequestOptions = {
       method: method,
@@ -82,9 +86,9 @@ export class HttpClient implements IHttpClient {
     return requestOptions;
   }
 
-  private deleteEmptyOptions(options: any): void {
+  private deleteEmptyOptions(options: string | popsicle.Query): void {
 
-    const propertyKeys: Array<string> = Object.keys(options);
+    const propertyKeys = Object.keys(options);
 
     propertyKeys.forEach((attributeKey: string): void => {
 
@@ -98,54 +102,75 @@ export class HttpClient implements IHttpClient {
     });
   }
 
-  private evaluateResponse<TResponse>(response: any): IResponse<TResponse> {
+  private evaluateResponse<TResponse>(response: popsicle.Response): IResponse<TResponse> {
 
     if (this.responseIsAnError(response)) {
-      this.createAndThrowEssentialProjectsError(response);
+      this.createAndThrowError(response);
     }
 
     const parsedResponse: IResponse<TResponse> = {
-      result: this.parseResponseBody(response.body),
+      result: this.tryParseStringtoJson(response.body),
       status: response.status,
     };
 
     return parsedResponse;
   }
 
-  private responseIsAnError(response: any): boolean {
+  private responseIsAnError(response: popsicle.Response): boolean {
     return response.status < this.httpSuccessResponseCode || response.status >= this.httpRedirectResponseCode;
   }
 
-  private createAndThrowEssentialProjectsError(response: any): void {
+  private createAndThrowError(response: popsicle.Response): void {
     const responseStatusCode = response.status;
     const errorName = EssentialProjectErrors.ErrorCodes[responseStatusCode];
 
-    const errorInfo = this.parseResponseBody<EssentialProjectErrors.BaseError>(response.body);
+    const errorInfo = this.tryParseStringtoJson<IErrorInfo | string>(response.body);
 
-    if (!this.isEssentialProjectsError(errorName)) {
-      throw new Error(errorInfo.message);
+    if (typeof errorInfo === 'string') {
+      this.throwErrorFromString(errorName, errorInfo as string);
     }
 
+    this.throwErrorFromObject(errorName, errorInfo as IErrorInfo);
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private tryParseStringtoJson<TResult>(result: any): TResult {
+    // NOTE: Every response.body received by popsicle is a string, even if "Content-Type application/json" is set, or no body was provided.
+    try {
+      return JSON.parse(result);
+    } catch (error) {
+      return result;
+    }
+  }
+
+  private throwErrorFromString(errorName: string, message: string): void {
+    throw this.isEssentialProjectsError(errorName)
+      ? new EssentialProjectErrors[errorName](message)
+      : new EssentialProjectErrors.InternalServerError(message);
+  }
+
+  private throwErrorFromObject(errorName: string, errorInfo: IErrorInfo): void {
+
+    if (this.isEssentialProjectsError(errorName)) {
+      this.throwEssentialProjectsError(errorName, errorInfo as IErrorInfo);
+    }
+
+    this.throwNonEssentialProjectsError(errorInfo as IErrorInfo);
+  }
+
+  private throwEssentialProjectsError(errorName: string, errorInfo: IErrorInfo): void {
     const essentialProjectsError = new EssentialProjectErrors[errorName](errorInfo.message);
     essentialProjectsError.additionalInformation = errorInfo.additionalInformation;
 
     throw essentialProjectsError;
   }
 
-  private isEssentialProjectsError(errorName: string): boolean {
-    return errorName in EssentialProjectErrors;
+  private throwNonEssentialProjectsError(error: IErrorInfo): void {
+    throw new Error(error.message);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private parseResponseBody<TTarget>(result: any): TTarget {
-    // NOTE: For whatever reason, every response.body received by popsicle is a string,
-    // even in a response header "Content-Type application/json" is set, or if the response body does not exist.
-    // To get around this, we have to cast the result manually.
-    try {
-      return JSON.parse(result);
-    } catch (error) {
-      return result;
-    }
+  private isEssentialProjectsError(errorName: string): boolean {
+    return errorName in EssentialProjectErrors;
   }
 
 }
